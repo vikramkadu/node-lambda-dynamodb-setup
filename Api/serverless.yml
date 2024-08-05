@@ -1,0 +1,39 @@
+service: service-1
+
+plugins:
+  - serverless-plugin-include-dependencies
+
+custom: ${file(../common/serverless.common.yml):custom}
+
+provider: ${file(../common/serverless.common.yml):provider}
+
+functions:
+  createUser:
+    handler: src/functions/handler.createUser
+    events:
+      - http:
+          path: user
+          method: post
+
+  getUser:
+    handler: src/functions/handler.getUser
+    events:
+      - http:
+          path: user/{id}
+          method: get
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Users
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5

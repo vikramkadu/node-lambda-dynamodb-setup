@@ -1,0 +1,16 @@
+# Node modules
+node_modules/
+npm-debug.log
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+
+# AWS credentials
+.aws/
+
+# Local serverless files
+.serverless/
