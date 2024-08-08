@@ -1,0 +1,31 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: pdfgozar
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: kinder
+service: node-lambda-dynamodb-setup
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+  - serverless-plugin-typescript
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+  stage: dev
+  timeout: 30
+  architecture: arm64
+  versionFunctions: false
+
+functions:
+  register:
+    handler: services/user/handler.registerUser 
+    memorySize: 512
+    events:
+      - http:
+          path: /api/v1/user/register  
+          method: post
+          cors:
+            origin: "*"
+            headers: "*" 

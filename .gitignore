@@ -14,3 +14,4 @@ logs/
 
 # Local serverless files
 .serverless/
+.build
