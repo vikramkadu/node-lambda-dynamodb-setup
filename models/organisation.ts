@@ -1,7 +1,7 @@
 import { DescribeTableCommand, CreateTableCommand } from "@aws-sdk/client-dynamodb";
 import { DynamoDB } from "../database/connection";
 
-const checkAndCreateTable = async (tableName:any) => {
+const checkAndCreateOrgTable = async (tableName:any) => {
     try {
         const describeTableCommand = new DescribeTableCommand({ TableName: tableName });
         await DynamoDB.send(describeTableCommand);
@@ -31,4 +31,4 @@ const checkAndCreateTable = async (tableName:any) => {
     }
 };
 
-export { checkAndCreateTable };
+export { checkAndCreateOrgTable };

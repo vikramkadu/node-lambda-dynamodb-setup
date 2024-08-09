@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "serverless offline",
-    "deploy": "serverless deploy",
+    "serve": "sls offline -P 4000",
+    "deploy": "serverless deploy --stage dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ."
   },

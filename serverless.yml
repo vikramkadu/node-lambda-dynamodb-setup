@@ -1,6 +1,4 @@
-# "org" ensures this Service is used with the correct Serverless Framework Access Key.
 org: pdfgozar
-# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
 app: kinder
 service: node-lambda-dynamodb-setup
 
@@ -9,23 +7,134 @@ plugins:
   - serverless-offline
   - serverless-plugin-typescript
 
+useDotenv: true
+
+package:
+  exclude:
+    - node_modules/**
+
+custom:
+  stage: dev
+  dynamoDBTable:
+    Users: ${self:custom.stage}-Users
+    organizations: ${self:custom.stage}-organizations
+    OrganizationSettings: ${self:custom.stage}-OrganizationSettings
+
 provider:
   name: aws
   runtime: nodejs16.x
   region: us-east-1
-  stage: dev
+  memorySize: 256
+  stage: ${self:custom.stage}
   timeout: 30
   architecture: arm64
   versionFunctions: false
+  environment:
+    DYNAMODB_TABLE_USERS: ${self:custom.dynamoDBTable.Users}
+    DYNAMODB_TABLE_ORGANIZATIONS: ${self:custom.dynamoDBTable.organizations}
+    DYNAMODB_TABLE_ORGANIZATIONS_SETTINGS: ${self:custom.dynamoDBTable.OrganizationSettings}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+        - dynamodb:Query
+        - dynamodb:Scan
+      Resource:
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoDBTable.Users}
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoDBTable.organizations}
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoDBTable.OrganizationSettings}
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.dynamoDBTable.Users}
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        BillingMode: PROVISIONED
+        Tags:
+          - Key: Name
+            Value: ${self:custom.dynamoDBTable.Users}
+
+    OrganizationsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.dynamoDBTable.organizations}
+        AttributeDefinitions:
+          - AttributeName: organization_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: organization_id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        BillingMode: PROVISIONED
+        Tags:
+          - Key: Name
+            Value: ${self:custom.dynamoDBTable.organizations}
+
+    OrganizationSettingsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.dynamoDBTable.OrganizationSettings}
+        AttributeDefinitions:
+          - AttributeName: organization_id
+            AttributeType: S
+          - AttributeName: settings
+            AttributeType: S
+        KeySchema:
+          - AttributeName: organization_id
+            KeyType: HASH
+          - AttributeName: settings
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        BillingMode: PROVISIONED
+        Tags:
+          - Key: Name
+            Value: ${self:custom.dynamoDBTable.OrganizationSettings}
 
 functions:
   register:
-    handler: services/user/handler.registerUser 
-    memorySize: 512
+    handler: services/user/handler.registerUser
+    memorySize: 256
     events:
       - http:
-          path: /api/v1/user/register  
+          path: /api/v1/user/register
           method: post
           cors:
             origin: "*"
-            headers: "*" 
+            headers: "*"
+  onboardCreate:
+    handler: services/user/handler.onboardCreate
+    memorySize: 256
+    events:
+      - http:
+          path: /api/v1/user/onboardCreate
+          method: post
+          cors:
+            origin: "*"
+            headers: "*"
+  getOrganizationSettings:
+    handler: services/settings/handler.getOrganizationSettings
+    memorySize: 256
+    events:
+      - http:
+          path: /api/v1/organization/settings/{org_name}
+          method: get
+          cors:
+            origin: "*"
+            headers: "*"
