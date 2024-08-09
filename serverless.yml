@@ -57,7 +57,7 @@ resources:
           - AttributeName: email
             AttributeType: S
         KeySchema:
-          - AttributeName: email
+          - AttributeName: org_id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 5
@@ -72,10 +72,10 @@ resources:
       Properties:
         TableName: ${self:custom.dynamoDBTable.organizations}
         AttributeDefinitions:
-          - AttributeName: organization_id
+          - AttributeName: org_name
             AttributeType: S
         KeySchema:
-          - AttributeName: organization_id
+          - AttributeName: org_id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 5
@@ -90,12 +90,10 @@ resources:
       Properties:
         TableName: ${self:custom.dynamoDBTable.OrganizationSettings}
         AttributeDefinitions:
-          - AttributeName: organization_id
-            AttributeType: S
           - AttributeName: settings
             AttributeType: S
         KeySchema:
-          - AttributeName: organization_id
+          - AttributeName: org_id
             KeyType: HASH
           - AttributeName: settings
             KeyType: RANGE
@@ -128,12 +126,22 @@ functions:
           cors:
             origin: "*"
             headers: "*"
-  getOrganizationSettings:
-    handler: services/settings/handler.getOrganizationSettings
+  getOrganizationSettingsByName:
+    handler: services/settings/handler.getOrganizationSettingsByName
     memorySize: 256
     events:
       - http:
-          path: /api/v1/organization/settings/{org_name}
+          path: /api/v1/getOrganizationSettingsByName/{org_name}
+          method: get
+          cors:
+            origin: "*"
+            headers: "*"
+  getOrganizationSettingsById:
+    handler: services/settings/handler.getOrganizationSettingsById
+    memorySize: 256
+    events:
+      - http:
+          path: /api/v1/getOrganizationSettingsById/{org_id}
           method: get
           cors:
             origin: "*"

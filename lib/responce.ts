@@ -1,5 +1,5 @@
 import { merge } from 'lodash';
-import { NOT_FOUND, ADDED_SUCCESSFULLY, DELETED_SUCCESSFULLY, UPDATED_SUCCESSFULLY, ALREADY_EXISTS, TOKEN_FAILED, INTERNAL_SERVER_ERROR, CONFIRMED_SUCCESS, FORGOT_PASSWORD_SUCCESS, ACCOUNT_LOCKED, INVAILD_CREDENTAILS, ACCOUNT_ALREADY_EXISTS } from "../lib/constants"
+import { NOT_FOUND} from "../lib/constants"
 import { getHeaders } from './getHeaders';
 
 export const isResponse = () => {
@@ -54,25 +54,3 @@ export const error = (statusCode: number, message: string, code?: string): any =
 export const ok = (body: any = undefined, headers: Object = {}) => response(200, body, headers)
 
 export const notFound = (message: string = NOT_FOUND, code?: string) => error(404, message, code);
-
-export const accountExist = (message: string = ACCOUNT_ALREADY_EXISTS, code?: string) => error(400, message, code);
-
-export const tokenFailed = (message: string = TOKEN_FAILED, code?: string) => error(500, message, code);
-
-export const alreadyExists = (message: string = ALREADY_EXISTS, code?: string) => error(403, message, code)
-
-export const addSucess = (message: string = ADDED_SUCCESSFULLY, code?: string) => response(200, message, code);
-
-export const deleteSucess = (message: string = DELETED_SUCCESSFULLY, code?: string) => response(200, message, code);
-
-export const updatedSucess = (message: string = UPDATED_SUCCESSFULLY, code?: string) => response(200, message, code);
-
-export const internalServerError = (message: string = INTERNAL_SERVER_ERROR, code?: string) => error(500, message, code);
-
-export const ConfirmedSuccess = (message: string = CONFIRMED_SUCCESS, code?: string) => response(200, message, code);
-
-export const forgotPasswordSuccess =(message: string = FORGOT_PASSWORD_SUCCESS, code?: string) => response(200, message, code);
-
-export const accountIsLocked = (message: string = ACCOUNT_LOCKED, code?: string) => error(500, message, code);
-
-export const invalidUsernameOrPassword = (message: string = INVAILD_CREDENTAILS, code?: string) => error(500, message, code)
