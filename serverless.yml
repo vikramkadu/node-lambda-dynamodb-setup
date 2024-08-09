@@ -6,6 +6,7 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-offline
   - serverless-plugin-typescript
+  - serverless-plugin-split-stacks
 
 useDotenv: true
 
@@ -18,34 +19,48 @@ custom:
   dynamoDBTable:
     Users: ${self:custom.stage}-Users
     organizations: ${self:custom.stage}-organizations
-    OrganizationSettings: ${self:custom.stage}-OrganizationSettings
+    OrganizationSettings: ${self:custom.stage}-OrganizationSetting
+  splitStacks:
+    perFunction: false
+    perType: false
+    perGroupFunction: true
+    nestedStackCount: 2
 
 provider:
   name: aws
   runtime: nodejs16.x
-  region: us-east-1
+  region: us-east-2
   memorySize: 256
   stage: ${self:custom.stage}
   timeout: 30
   architecture: arm64
+  individually : true
   versionFunctions: false
   environment:
     DYNAMODB_TABLE_USERS: ${self:custom.dynamoDBTable.Users}
     DYNAMODB_TABLE_ORGANIZATIONS: ${self:custom.dynamoDBTable.organizations}
     DYNAMODB_TABLE_ORGANIZATIONS_SETTINGS: ${self:custom.dynamoDBTable.OrganizationSettings}
 
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:PutItem
-        - dynamodb:GetItem
-        - dynamodb:UpdateItem
-        - dynamodb:Query
-        - dynamodb:Scan
-      Resource:
-        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoDBTable.Users}
-        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoDBTable.organizations}
-        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoDBTable.OrganizationSettings}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:UpdateItem
+            - dynamodb:Query
+            - dynamodb:Scan
+          Resource:
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoDBTable.Users}
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoDBTable.organizations}
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoDBTable.OrganizationSettings}
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: "*"
 
 resources:
   Resources:
@@ -54,11 +69,15 @@ resources:
       Properties:
         TableName: ${self:custom.dynamoDBTable.Users}
         AttributeDefinitions:
+          - AttributeName: org_id
+            AttributeType: S
           - AttributeName: email
             AttributeType: S
         KeySchema:
           - AttributeName: org_id
             KeyType: HASH
+          - AttributeName: email
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
@@ -72,11 +91,15 @@ resources:
       Properties:
         TableName: ${self:custom.dynamoDBTable.organizations}
         AttributeDefinitions:
+          - AttributeName: org_id
+            AttributeType: S
           - AttributeName: org_name
             AttributeType: S
         KeySchema:
           - AttributeName: org_id
             KeyType: HASH
+          - AttributeName: org_name
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
@@ -90,13 +113,15 @@ resources:
       Properties:
         TableName: ${self:custom.dynamoDBTable.OrganizationSettings}
         AttributeDefinitions:
+          - AttributeName: org_id
+            AttributeType: S
           - AttributeName: settings
             AttributeType: S
         KeySchema:
           - AttributeName: org_id
             KeyType: HASH
           - AttributeName: settings
-            KeyType: RANGE
+            KeyType: RANGE  
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
