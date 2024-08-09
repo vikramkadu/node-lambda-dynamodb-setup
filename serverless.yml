@@ -1,4 +1,4 @@
-org: pdfgozar
+org: devkindr
 app: kinder
 service: node-lambda-dynamodb-setup
 
@@ -28,13 +28,13 @@ custom:
 
 provider:
   name: aws
+  deploymentMethod: changesets
   runtime: nodejs16.x
   region: us-east-2
   memorySize: 256
   stage: ${self:custom.stage}
   timeout: 30
   architecture: arm64
-  individually : true
   versionFunctions: false
   environment:
     DYNAMODB_TABLE_USERS: ${self:custom.dynamoDBTable.Users}

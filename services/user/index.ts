@@ -1,7 +1,6 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { ReturnValue } from '@aws-sdk/client-dynamodb';
 import { PutCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
-import { checkAndCreateTable } from '../../models/user';
 import { response } from '../../lib/responce';
 import { executeDynamoDBCommand } from '../../database/helper';
 import { ADDED_SUCCESSFULLY, ORGANIZATIONS_ONBOARD_SUCCESSFULLY, REQUIRED_FIELDS, UPDATED_SUCCESSFULLY } from '../../lib/constants';
@@ -13,7 +12,6 @@ export const registerUserHandler = async (event: APIGatewayEvent): Promise<APIGa
     if (!full_name || !email || !role_info) {
         return response(400,REQUIRED_FIELDS);
     }
-    // await checkAndCreateTable('Users');
 
     const params = {
         TableName: process.env.DYNAMODB_TABLE_USERS || '',
@@ -50,7 +48,6 @@ export const onboardCreateHandler = async (event: APIGatewayEvent): Promise<APIG
     if (!org_name || !primary_goals || !geo_focus || !sectors_aligned || !email) {
         return response(400,REQUIRED_FIELDS);
     }
-    // await checkAndCreateTable('ORGANIZATIONS');
     const params = {
         TableName: process.env.DYNAMODB_TABLE_ORGANIZATIONS || '',
         Item: { email, org_name, primary_goals, geo_focus, sectors_aligned },
