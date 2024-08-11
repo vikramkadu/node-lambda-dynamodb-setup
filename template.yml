@@ -1,0 +1,148 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Runtime: nodejs16.x
+    MemorySize: 256
+    Timeout: 30
+    Environment:
+      Variables:
+        DYNAMODB_TABLE_USERS: !Sub "${Stage}-Users"
+        DYNAMODB_TABLE_ORGANIZATIONS: !Sub "${Stage}-organizations"
+        DYNAMODB_TABLE_ORGANIZATIONS_SETTINGS: !Sub "${Stage}-OrganizationSetting"
+
+Resources:
+  UsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${Stage}-Users"
+      AttributeDefinitions:
+        - AttributeName: org_id
+          AttributeType: S
+        - AttributeName: email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: org_id
+          KeyType: HASH
+        - AttributeName: email
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      BillingMode: PROVISIONED
+      Tags:
+        - Key: Name
+          Value: !Sub "${Stage}-Users"
+
+  OrganizationsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${Stage}-organizations"
+      AttributeDefinitions:
+        - AttributeName: org_id
+          AttributeType: S
+        - AttributeName: org_name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: org_id
+          KeyType: HASH
+        - AttributeName: org_name
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      BillingMode: PROVISIONED
+      Tags:
+        - Key: Name
+          Value: !Sub "${Stage}-organizations"
+
+  OrganizationSettingsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${Stage}-OrganizationSetting"
+      AttributeDefinitions:
+        - AttributeName: org_id
+          AttributeType: S
+        - AttributeName: settings
+          AttributeType: S
+      KeySchema:
+        - AttributeName: org_id
+          KeyType: HASH
+        - AttributeName: settings
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      BillingMode: PROVISIONED
+      Tags:
+        - Key: Name
+          Value: !Sub "${Stage}-OrganizationSetting"
+
+  RegisterUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/user/handler.registerUser
+      Events:
+        RegisterUserApi:
+          Type: Api
+          Properties:
+            Path: /api/v1/user/register
+            Method: post
+            Cors:
+              AllowMethods: "'POST'"
+              AllowHeaders: "'*'"
+              AllowOrigin: "'*'"
+
+  OnboardCreateFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/user/handler.onboardCreate
+      Events:
+        OnboardCreateApi:
+          Type: Api
+          Properties:
+            Path: /api/v1/user/onboardCreate
+            Method: post
+            Cors:
+              AllowMethods: "'POST'"
+              AllowHeaders: "'*'"
+              AllowOrigin: "'*'"
+
+  GetOrganizationSettingsByNameFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/settings/handler.getOrganizationSettingsByName
+      Events:
+        GetOrgSettingsByNameApi:
+          Type: Api
+          Properties:
+            Path: /api/v1/getOrganizationSettingsByName/{org_name}
+            Method: get
+            Cors:
+              AllowMethods: "'GET'"
+              AllowHeaders: "'*'"
+              AllowOrigin: "'*'"
+
+  GetOrganizationSettingsByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/settings/handler.getOrganizationSettingsById
+      Events:
+        GetOrgSettingsByIdApi:
+          Type: Api
+          Properties:
+            Path: /api/v1/getOrganizationSettingsById/{org_id}
+            Method: get
+            Cors:
+              AllowMethods: "'GET'"
+              AllowHeaders: "'*'"
+              AllowOrigin: "'*'"
+
+Outputs:
+  UsersTableName:
+    Value: !Sub "${Stage}-Users"
+  OrganizationsTableName:
+    Value: !Sub "${Stage}-organizations"
+  OrganizationSettingsTableName:
+    Value: !Sub "${Stage}-OrganizationSetting"
