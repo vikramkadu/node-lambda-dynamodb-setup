@@ -1,6 +1,12 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
+Parameters:
+  Stage:
+    Type: String
+    Default: dev
+    Description: The deployment stage
+
 Globals:
   Function:
     Runtime: nodejs16.x
@@ -13,6 +19,70 @@ Globals:
         DYNAMODB_TABLE_ORGANIZATIONS_SETTINGS: !Sub "${Stage}-OrganizationSetting"
 
 Resources:
+  Api:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub "${Stage}-api"
+      StageName: !Ref Stage
+      DefinitionBody:
+        swagger: '2.0'
+        info:
+          title: My API
+          version: '1.0'
+        paths:
+          /api/v1/user/register:
+            post:
+              produces:
+                - application/json
+              responses:
+                '200':
+                  description: OK
+              x-amazon-apigateway-integration:
+                type: aws_proxy
+                httpMethod: POST
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RegisterUserFunction.Arn}/invocations
+          /api/v1/user/onboardCreate:
+            post:
+              produces:
+                - application/json
+              responses:
+                '200':
+                  description: OK
+              x-amazon-apigateway-integration:
+                type: aws_proxy
+                httpMethod: POST
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${OnboardCreateFunction.Arn}/invocations
+          /api/v1/getOrganizationSettingsByName/{org_name}:
+            get:
+              produces:
+                - application/json
+              responses:
+                '200':
+                  description: OK
+              x-amazon-apigateway-integration:
+                type: aws_proxy
+                httpMethod: GET
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetOrganizationSettingsByNameFunction.Arn}/invocations
+          /api/v1/getOrganizationSettingsById/{org_id}:
+            get:
+              produces:
+                - application/json
+              responses:
+                '200':
+                  description: OK
+              x-amazon-apigateway-integration:
+                type: aws_proxy
+                httpMethod: GET
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetOrganizationSettingsByIdFunction.Arn}/invocations
+      Cors:
+        AllowMethods: "'OPTIONS,GET,POST'"
+        AllowHeaders: "'Content-Type'"
+        AllowOrigin: "'*'"
+
   UsersTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -87,12 +157,9 @@ Resources:
         RegisterUserApi:
           Type: Api
           Properties:
+            RestApiId: !Ref Api
             Path: /api/v1/user/register
             Method: post
-            Cors:
-              AllowMethods: "'POST'"
-              AllowHeaders: "'*'"
-              AllowOrigin: "'*'"
 
   OnboardCreateFunction:
     Type: AWS::Serverless::Function
@@ -102,12 +169,9 @@ Resources:
         OnboardCreateApi:
           Type: Api
           Properties:
+            RestApiId: !Ref Api
             Path: /api/v1/user/onboardCreate
             Method: post
-            Cors:
-              AllowMethods: "'POST'"
-              AllowHeaders: "'*'"
-              AllowOrigin: "'*'"
 
   GetOrganizationSettingsByNameFunction:
     Type: AWS::Serverless::Function
@@ -117,12 +181,9 @@ Resources:
         GetOrgSettingsByNameApi:
           Type: Api
           Properties:
+            RestApiId: !Ref Api
             Path: /api/v1/getOrganizationSettingsByName/{org_name}
             Method: get
-            Cors:
-              AllowMethods: "'GET'"
-              AllowHeaders: "'*'"
-              AllowOrigin: "'*'"
 
   GetOrganizationSettingsByIdFunction:
     Type: AWS::Serverless::Function
@@ -132,12 +193,9 @@ Resources:
         GetOrgSettingsByIdApi:
           Type: Api
           Properties:
+            RestApiId: !Ref Api
             Path: /api/v1/getOrganizationSettingsById/{org_id}
             Method: get
-            Cors:
-              AllowMethods: "'GET'"
-              AllowHeaders: "'*'"
-              AllowOrigin: "'*'"
 
 Outputs:
   UsersTableName:
@@ -146,3 +204,5 @@ Outputs:
     Value: !Sub "${Stage}-organizations"
   OrganizationSettingsTableName:
     Value: !Sub "${Stage}-OrganizationSetting"
+  ApiUrl:
+    Value: !Sub "https://${Api}.execute-api.${AWS::Region}.amazonaws.com/${Stage}"
