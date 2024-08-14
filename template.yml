@@ -2,6 +2,9 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
 Parameters:
+  KindrPlatformIAMRole: 
+    Type: String
+    Description: Lambda Role
   Stage:
     Type: String
     Default: dev
@@ -9,7 +12,7 @@ Parameters:
 
 Globals:
   Function:
-    Runtime: nodejs16.x
+    Runtime: nodejs20.x
     MemorySize: 256
     Timeout: 30
     Environment:
@@ -22,66 +25,7 @@ Resources:
   Api:
     Type: AWS::Serverless::Api
     Properties:
-      Name: !Sub "${Stage}-api"
       StageName: !Ref Stage
-      DefinitionBody:
-        swagger: '2.0'
-        info:
-          title: My API
-          version: '1.0'
-        paths:
-          /api/v1/user/register:
-            post:
-              produces:
-                - application/json
-              responses:
-                '200':
-                  description: OK
-              x-amazon-apigateway-integration:
-                type: aws_proxy
-                httpMethod: POST
-                uri:
-                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RegisterUserFunction.Arn}/invocations
-          /api/v1/user/onboardCreate:
-            post:
-              produces:
-                - application/json
-              responses:
-                '200':
-                  description: OK
-              x-amazon-apigateway-integration:
-                type: aws_proxy
-                httpMethod: POST
-                uri:
-                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${OnboardCreateFunction.Arn}/invocations
-          /api/v1/getOrganizationSettingsByName/{org_name}:
-            get:
-              produces:
-                - application/json
-              responses:
-                '200':
-                  description: OK
-              x-amazon-apigateway-integration:
-                type: aws_proxy
-                httpMethod: GET
-                uri:
-                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetOrganizationSettingsByNameFunction.Arn}/invocations
-          /api/v1/getOrganizationSettingsById/{org_id}:
-            get:
-              produces:
-                - application/json
-              responses:
-                '200':
-                  description: OK
-              x-amazon-apigateway-integration:
-                type: aws_proxy
-                httpMethod: GET
-                uri:
-                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetOrganizationSettingsByIdFunction.Arn}/invocations
-      Cors:
-        AllowMethods: "'OPTIONS,GET,POST'"
-        AllowHeaders: "'Content-Type'"
-        AllowOrigin: "'*'"
 
   UsersTable:
     Type: AWS::DynamoDB::Table
@@ -135,7 +79,7 @@ Resources:
         - AttributeName: org_id
           AttributeType: S
         - AttributeName: settings
-          AttributeType: S
+          AttributeType: B
       KeySchema:
         - AttributeName: org_id
           KeyType: HASH
@@ -149,60 +93,128 @@ Resources:
         - Key: Name
           Value: !Sub "${Stage}-OrganizationSetting"
 
+  healthCheck:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/index.healthCheck
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 10
+      Role: !Ref KindrPlatformIAMRole
+      Events:
+        healthCheck:
+          Type: Api
+          Properties:
+            Path: /api/v1/healthCheck
+            Method: GET
+            RestApiId: !Ref Api
+
   RegisterUserFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: services/user/handler.registerUser
+      Handler: services/user/index.registerUserHandler
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 30
+      Role: !Ref KindrPlatformIAMRole
       Events:
-        RegisterUserApi:
+        RegisterUserFunction:
+          Type: Api
+          Properties:
+            Path: /api/v1/user/register
+            Method: POST
+            RestApiId: !Ref Api
+  
+  CognitoSignUpHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/user/index.cognitoSignUpHandler
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 30
+      Role: !Ref KindrPlatformIAMRole
+      Events:
+        CognitoSignUpHandler:
+          Type: Api
+          Properties:
+            Path: /api/v1/user/cognitoSignUp
+            Method: POST
+            RestApiId: !Ref Api
+   
+  ConfirmUserHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/user/index.confirmUserHandler
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 30
+      Role: !Ref KindrPlatformIAMRole
+      Events:
+        ConfirmUserHandler:
+          Type: Api
+          Properties:
+            Path: /api/v1/user/confirmUser
+            Method: POST
+            RestApiId: !Ref Api
+
+  getOnboardSettings:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/user/index.getOnboardSettings
+      Runtime: nodejs20.x
+      MemorySize: 256
+      Timeout: 30
+      Role: !Ref KindrPlatformIAMRole
+      Events:
+        GetOnboardSettings:
           Type: Api
           Properties:
             RestApiId: !Ref Api
-            Path: /api/v1/user/register
-            Method: post
+            Path: /api/v1/user/getOnboardSettings/{role_type}
+            Method: GET
 
   OnboardCreateFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: services/user/handler.onboardCreate
+      Handler: services/user/index.onboardCreateHandler
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 30
+      Role: !Ref KindrPlatformIAMRole
       Events:
-        OnboardCreateApi:
+        OnboardCreateFunction:
           Type: Api
           Properties:
             RestApiId: !Ref Api
             Path: /api/v1/user/onboardCreate
-            Method: post
-
-  GetOrganizationSettingsByNameFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: services/settings/handler.getOrganizationSettingsByName
-      Events:
-        GetOrgSettingsByNameApi:
-          Type: Api
-          Properties:
-            RestApiId: !Ref Api
-            Path: /api/v1/getOrganizationSettingsByName/{org_name}
-            Method: get
+            Method: POST
 
   GetOrganizationSettingsByIdFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: services/settings/handler.getOrganizationSettingsById
+      Handler: services/settings/index.getAllOrganisationSetting
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 30
+      Role: !Ref KindrPlatformIAMRole
       Events:
-        GetOrgSettingsByIdApi:
+        GetOrganizationSettingsByIdFunction:
           Type: Api
           Properties:
             RestApiId: !Ref Api
             Path: /api/v1/getOrganizationSettingsById/{org_id}
-            Method: get
+            Method: GET
 
 Outputs:
   UsersTableName:
-    Value: !Sub "${Stage}-Users"
+    Value: !Ref UsersTable
+    Export:
+      Name: UsersTableName
   OrganizationsTableName:
-    Value: !Sub "${Stage}-organizations"
-  OrganizationSettingsTableName:
-    Value: !Sub "${Stage}-OrganizationSetting"
-  ApiUrl:
-    Value: !Sub "https://${Api}.execute-api.${AWS::Region}.amazonaws.com/${Stage}"
+    Value: !Ref OrganizationsTable
+    Export:
+      Name: OrganizationsTableName
+  OrganizationsSettingsTableName:
+    Value: !Ref OrganizationSettingsTable
+    Export:
+      Name: OrganizationsSettingsTableName

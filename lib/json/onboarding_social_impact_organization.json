@@ -1,0 +1,352 @@
+{
+  "welcome_msg": "Welcome to Kindr! Our platform connects organizations like yours with impact entities and initiatives that align with your goals. Let's get started with a few questions to tailor your experience.",
+  "end_msg": "We're excited to help you amplify your mission and impact, connecting you with like-minded advocates and investors that share your values and vision for our planet.",
+  "is_creator": true,
+  "questions": [
+    {
+      "que": "Select your organization’s primary mission area(s) from the Kindr Pillars:",
+      "dis": "",
+      "que_type": "list",
+      "multiselect": false,
+      "list": [
+        {
+          "que": "Animals",
+          "dis": "",
+          "que_type": "list",
+          "list": [
+            {
+              "que": "Wildlife Conservation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Animal Welfare/Rights",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Pet Adoption",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Habitat Preservation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Veterinary Care",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Veganism and Plant-Based Advocacy",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Farm Animal Protection",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Marine Conservation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Other (please specify)",
+              "dis": "",
+              "que_type": "input"
+            }
+          ]
+        },
+        {
+          "que": "People",
+          "dis": "",
+          "que_type": "list",
+          "list": [
+            {
+              "que": "Education",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Healthcare",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Poverty Alleviation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Gender Equality",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Community Development",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Human Rights and Social Justice",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Youth and Elderly Support",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Mental Health Advocacy",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Disability Support",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Other (please specify)",
+              "dis": "",
+              "que_type": "input"
+            }
+          ]
+        },
+        {
+          "que": "Environment",
+          "dis": "",
+          "que_type": "list",
+          "list": [
+            {
+              "que": "Climate Change Mitigation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Renewable Energy",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Waste Management",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Biodiversity Conservation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Sustainable Agriculture",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Water Conservation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Pollution Control",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Urban Green Spaces",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Environmental Education and Advocacy",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Other (please specify)",
+              "dis": "",
+              "que_type": "input"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "que": "Impact Measurement: Organizations select how they measure their impact:",
+      "dis": "",
+      "que_type": "list",
+      "multiselect": true,
+      "list": [
+        {
+          "que": "Number of Beneficiaries Served",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Reduction in Carbon Emissions",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Increase in Biodiversity",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Improvement in Health Outcomes",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Economic Empowerment Indicators",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Reduction in Waste Production",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Increase in Renewable Energy Usage",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Improvement in Educational Outcomes",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Volunteer Hours Contributed",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Number of Projects Completed",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Community Engagement Levels",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Increase in Protected Areas",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Water Conservation Achievements",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Other (please specify)",
+          "dis": "",
+          "que_type": "input"
+        }
+      ]
+    },
+    {
+      "que": "Which Sustainable Development Goals (SDGs) does your organization's work align with?",
+      "dis": "",
+      "que_type": "dropdown",
+      "multiselect": true,
+      "list": [
+        {
+          "que": "No poverty (SDG 1)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Zero hunger (SDG 2)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Good health and well-being (SDG 3)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Quality education (SDG 4)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Gender equality (SDG 5)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Clean water and sanitation (SDG 6)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Affordable and clean energy (SDG 7)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Decent work and economic growth (SDG 8)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Industry, innovation, and infrastructure (SDG 9)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Reduced inequalities (SDG 10)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Sustainable cities and communities (SDG 11)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Responsible consumption and production (SDG 12)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Climate action (SDG 13)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Life below water (SDG 14)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Life on land (SDG 15)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Peace, justice, and strong institutions (SDG 16)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Partnerships for the goals (SDG 17)",
+          "dis": "",
+          "que_type": "button"
+        }
+      ]
+    }
+  ]
+}

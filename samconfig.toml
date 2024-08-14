@@ -1,0 +1,17 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "dev-kindr-app"
+s3_bucket = "kindr-dev-engineers"
+s3_prefix = "dev-kindr-app"
+region = "us-east-2"
+confirm_changeset = true
+capabilities = ["CAPABILITY_IAM","CAPABILITY_NAMED_IAM"]
+disable_rollback = true
+parameter_overrides = "Stage=\"dev\" KindrPlatformIAMRole=\"arn:aws:iam::026090514547:role/kindr-dev-lambda-execution-role\""
+image_repositories = []
+
+[default.global]
+# Optional parameter to specify a profile from your AWS credentials.
+profile = "default"

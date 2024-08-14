@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Social Impact Organization",
+    "icon": "assets/img/ic_organization.png",
+    "type": [
+      "Nonprofit Organization (NPO)",
+      "Non-Governmental Organization (NGO)",
+      "For-Profit Impact Entity"
+    ],
+    "country": true,
+    "business_no": true
+  },
+  {
+    "name": "Investor",
+    "icon": "assets/img/ic_investor.png",
+    "type": [
+      "Impact Investor",
+      "Corporation",
+      "Foundation"
+    ],
+    "country": false,
+    "business_no": false
+  },
+  {
+    "name": "Individual",
+    "icon": "assets/img/ic_individual.png",
+    "type": [],
+    "country": false,
+    "business_no": false
+  }
+]

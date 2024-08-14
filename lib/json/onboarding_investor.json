@@ -1,0 +1,369 @@
+{
+  "welcome_msg": "Welcome to Kindr! Our platform connects organizations like yours with impact entities and initiatives that align with your goals. Let's get started with a few questions to tailor your experience.",
+  "end_msg": "We're excited to align you with impactful investment opportunities and support your mission to create positive and sustainable change via the Kindr community",
+  "is_creator": false,
+  "questions": [
+    {
+      "que": "What is your organization type?",
+      "dis": "",
+      "que_type": "list",
+      "multiselect": false,
+      "list": [
+        {
+          "que": "Corporation",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Impact Investor/Fund",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Foundation",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Other (please specify)",
+          "dis": "",
+          "que_type": "input"
+        }
+      ]
+    },
+    {
+      "que": "What is the name of your organization?",
+      "dis": "Legal Name",
+      "que_type": "input",
+      "multiselect": false,
+      "list": []
+    },
+    {
+      "que": "What are your primary goal(s) for using Kindr?",
+      "dis": "",
+      "que_type": "list",
+      "multiselect": true,
+      "list": [
+        {
+          "que": "Tracking impact metrics",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Finding investment opportunities",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Collaborating with impact Orgs",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Research and insights",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Showcasing your company's impact",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Other (please specify)",
+          "dis": "",
+          "que_type": "button"
+        }
+      ]
+    },
+    {
+      "que": "What is the geographical focus of your investment preferences?",
+      "dis": "",
+      "que_type": "list",
+      "multiselect": false,
+      "list": [
+        {
+          "que": "Local",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Regional",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "National",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Global",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "No Specific Preference",
+          "dis": "",
+          "que_type": "button"
+        }
+      ]
+    },
+    {
+      "que": "What is your investment horizon?",
+      "dis": "",
+      "que_type": "dropdown",
+      "multiselect": true,
+      "list": [
+        {
+          "que": "Short-term",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Medium-term",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Long-term",
+          "dis": "",
+          "que_type": "button"
+        }
+      ]
+    },
+    {
+      "que": "How does your organization currently measure the success of its impact investments?",
+      "dis": "",
+      "que_type": "dropdown-grouped",
+      "multiselect": false,
+      "list": [
+        {
+          "que": "No current measurement",
+          "dis": "",
+          "que_type": "group",
+          "group": []
+        },
+        {
+          "que": "Financial Metrics",
+          "dis": "",
+          "que_type": "group",
+          "group": [
+            "Return on Investment (ROI)",
+            "Internal Rate of Return (IRR)",
+            "Social Return on Investment (SROI)",
+            "Economic Value Added (EVA)"
+          ]
+        },
+        {
+          "que": "Social Impact Metrics",
+          "dis": "",
+          "que_type": "group",
+          "group": [
+            "Number of Jobs Created",
+            "Improved Access to Education",
+            "Improved Health Outcomes",
+            "Poverty Alleviation",
+            "Gender Equality Progress"
+          ]
+        },
+        {
+          "que": "Environmental Impact Metrics",
+          "dis": "",
+          "que_type": "group",
+          "group": [
+            "Reduction in Carbon Emissions",
+            "Energy Saved",
+            "Water Conserved",
+            "Waste Reduced or Recycled",
+            "Biodiversity Protected"
+          ]
+        },
+        {
+          "que": "Governance and Ethical Metrics",
+          "dis": "",
+          "que_type": "group",
+          "group": [
+            "Improved Corporate Governance",
+            "Ethical Supply Chain Practices",
+            "Community Engagement and Development"
+          ]
+        },
+        {
+          "que": "Other (please specify)",
+          "dis": "",
+          "que_type": "input",
+          "group": []
+        }
+      ]
+    },
+    {
+      "que": "Which sectors or industries are you most interested in for impact investing?",
+      "dis": "",
+      "que_type": "dropdown-grouped",
+      "multiselect": false,
+      "list": [
+        {
+          "que": "Industry/Sector Agnostic",
+          "dis": "",
+          "que_type": "group",
+          "group": []
+        },
+        {
+          "que": "Environmental",
+          "dis": "",
+          "que_type": "group",
+          "group": [
+            "Renewable Energy",
+            "Climate Change Mitigation",
+            "Clean Technology",
+            "Waste Management",
+            "Biodiversity and Conservation",
+            "Animal Welfare"
+          ]
+        },
+        {
+          "que": "Social",
+          "dis": "",
+          "que_type": "group",
+          "group": [
+            "Education",
+            "Healthcare",
+            "Affordable Housing",
+            "Financial Inclusion",
+            "Social Enterprise",
+            "Gender Equality",
+            "Human Rights and Justice",
+            "Community Development",
+            "Elderly Care",
+            "Child and Youth Development"
+          ]
+        },
+        {
+          "que": "Economic",
+          "dis": "",
+          "que_type": "group",
+          "group": [
+            "Agriculture",
+            "Water and Sanitation",
+            "Sustainable Transportation",
+            "Microfinance",
+            "Technology for Social Good",
+            "Rural Development",
+            "Urban Development",
+            "Workforce Development",
+            "Food Security",
+            "Public Health"
+          ]
+        },
+        {
+          "que": "Cultural",
+          "dis": "",
+          "que_type": "group",
+          "group": [
+            "Arts and Culture"
+          ]
+        },
+        {
+          "que": "Other (please specify)",
+          "dis": "",
+          "que_type": "input",
+          "group": []
+        }
+      ]
+    },
+    {
+      "que": "Are there any specific Sustainable Development Goals (SDGs) you prioritize?",
+      "dis": "",
+      "que_type": "dropdown",
+      "multiselect": true,
+      "list": [
+        {
+          "que": "No poverty (SDG 1)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Zero hunger (SDG 2)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Good health and well-being (SDG 3)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Quality education (SDG 4)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Gender equality (SDG 5)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Clean water and sanitation (SDG 6)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Affordable and clean energy (SDG 7)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Decent work and economic growth (SDG 8)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Industry, innovation, and infrastructure (SDG 9)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Reduced inequalities (SDG 10)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Sustainable cities and communities (SDG 11)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Responsible consumption and production (SDG 12)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Climate action (SDG 13)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Life below water (SDG 14)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Life on land (SDG 15)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Peace, justice, and strong institutions (SDG 16)",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Partnerships for the goals (SDG 17)",
+          "dis": "",
+          "que_type": "button"
+        }
+      ]
+    }
+  ]
+}

@@ -1,8 +1,8 @@
-import { DynamoDB } from "./connection";
-import { response } from '../lib/responce';
+import { DynamoDB } from "./connection.mjs";
+import { response } from '../lib/responce.mjs';
 
 // Helper function to handle DynamoDB commands
-export const executeDynamoDBCommand = async (command: any, successMessage: string) => {
+export const executeDynamoDBCommand = async (command, successMessage) => {
     try {
         const res = await DynamoDB.send(command);
         console.log(res);

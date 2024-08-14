@@ -11,7 +11,10 @@ logs/
 
 # AWS credentials
 .aws/
+.aws-sam
 
 # Local serverless files
 .serverless/
 .build
+
+.DS_Store

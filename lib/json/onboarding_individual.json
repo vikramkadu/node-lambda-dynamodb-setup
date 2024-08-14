@@ -1,0 +1,238 @@
+{
+  "welcome_msg": "Welcome to Kindr! Our platform connects organizations like yours with impact entities and initiatives that align with your goals. Let's get started with a few questions to tailor your experience.",
+  "end_msg": "We're excited to support your advocacy journey and connect you with initiatives, organizations, and communities that share your values and vision for our planet.",
+  "is_creator": false,
+  "questions" : [
+    {
+      "que": "Select one or more pillars that resonate with you. Each pillar represents a key area where we can create positive impact:",
+      "dis": "",
+      "que_type": "list",
+      "multiselect": false,
+      "list": [
+        {
+          "que": "Animals",
+          "dis": "",
+          "que_type": "list",
+          "list": [
+            {
+              "que": "Wildlife Conservation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Animal Welfare/Rights",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Pet Adoption",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Habitat Preservation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Veterinary Care",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Veganism and Plant-Based Advocacy",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Farm Animal Protection",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Marine Conservation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Other (please specify)",
+              "dis": "",
+              "que_type": "input"
+            }
+          ]
+        },
+        {
+          "que": "People",
+          "dis": "",
+          "que_type": "list",
+          "list": [
+            {
+              "que": "Education",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Healthcare",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Poverty Alleviation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Gender Equality",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Community Development",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Human Rights and Social Justice",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Youth and Elderly Support",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Mental Health Advocacy",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Disability Support",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Other (please specify)",
+              "dis": "",
+              "que_type": "input"
+            }
+          ]
+        },
+        {
+          "que": "Environment",
+          "dis": "",
+          "que_type": "list",
+          "list": [
+            {
+              "que": "Climate Change Mitigation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Renewable Energy",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Waste Management",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Biodiversity Conservation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Sustainable Agriculture",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Water Conservation",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Pollution Control",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Urban Green Spaces",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Environmental Education and Advocacy",
+              "dis": "",
+              "que_type": "button"
+            },
+            {
+              "que": "Other (please specify)",
+              "dis": "",
+              "que_type": "input"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "que": "Are you more interested in exploring local initiatives or global causes?",
+      "dis": "",
+      "que_type": "dropdown",
+      "multiselect": false,
+      "list": [
+        {
+          "que": "Local",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Global",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Both",
+          "dis": "",
+          "que_type": "button"
+        }
+      ]
+    },
+    {
+      "que": "What types of content do you enjoy engaging with the most?",
+      "dis": "",
+      "que_type": "dropdown",
+      "multiselect": true,
+      "list": [
+        {
+          "que": "Videos",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Pictures",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Forums",
+          "dis": "",
+          "que_type": "button"
+        },
+        {
+          "que": "Infographics",
+          "dis": "",
+          "que_type": "button"
+        }
+      ]
+    },
+    {
+      "que": "Would you like to receive updates and notifications about new initiatives, success stories, and impact reports related to your interests?",
+      "dis": "If yes, then subscribe to our newsletter",
+      "que_type": "checkbox",
+      "multiselect": false
+    }
+  ]
+}

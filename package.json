@@ -2,12 +2,10 @@
   "name": "node-lambda-dynamodb-setup",
   "version": "1.0.0",
   "description": "Serverless application with Node.js, DynamoDB, and AWS Lambda",
-  "main": "index.js",
   "scripts": {
-    "start": "serverless offline",
-    "serve": "sls offline -P 4000",
-    "deploy": "serverless deploy --stage dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "sam local start-api",
+    "build": "sam build --config-file samconfig.toml --config-env default",
+    "deploy": "sam deploy --config-file samconfig.toml --config-env default",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -23,7 +21,7 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^16.11.7",
+    "@types/node": "^16.18.105",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.25.2",
